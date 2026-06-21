@@ -78,30 +78,46 @@ export function emailTemplate(title: string, body: string): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
+  <style>
+    .body-bg {
+      background-color: #050505;
+    }
+    .card-pro {
+      background-color: #0A0A0A;
+      border: 1px solid #1A1A1A;
+      border-radius: 16px;
+      padding: 48px 40px;
+    }
+    .text-gradient {
+      background: linear-gradient(to right, #FF5E00, #FF007A);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
 </head>
-<body style="margin:0;padding:0;background-color:#000000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#ffffff;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#000000;padding:40px 20px;">
+<body class="body-bg" style="margin:0;padding:0;background-color:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#ffffff;">
+  <table width="100%" cellpadding="0" cellspacing="0" class="body-bg" style="background-color:#050505;padding:60px 20px;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
           <!-- Logo -->
           <tr>
-            <td align="center" style="padding-bottom:40px;">
-              <img src="https://ik.imagekit.io/hx85ktgzm/S-Web-Hub-logo%20(1).webp" alt="S-Web Hub" width="64" height="64" style="border-radius:50%;border:2px solid rgba(255,255,255,0.15);display:block;box-shadow:0 0 25px rgba(59,130,246,0.25);" />
+            <td align="center" style="padding-bottom:32px;">
+              <img src="https://ik.imagekit.io/hx85ktgzm/S-Web-Hub-logo%20(1).webp" alt="S-Web Hub" width="48" height="48" style="border-radius:12px;display:block;" />
             </td>
           </tr>
           <!-- Card -->
           <tr>
-            <td style="background: linear-gradient(145deg, #11131a, #0a0b0f); border: 1px solid rgba(255,255,255,0.05); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 48px 40px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), inset 0 2px 2px rgba(255,255,255,0.1), inset 0 -4px 10px rgba(0,0,0,0.5);">
-              <h1 style="color:#ffffff;font-size:28px;font-weight:700;margin:0 0 24px 0;letter-spacing:-0.03em;line-height:1.2;text-shadow: 0 2px 4px rgba(0,0,0,0.5);">${title}</h1>
+            <td class="card-pro" style="background-color: #0A0A0A; border: 1px solid #1A1A1A; border-radius: 16px; padding: 48px 40px;">
+              <h1 style="color:#ffffff;font-size:24px;font-weight:600;margin:0 0 24px 0;letter-spacing:-0.02em;line-height:1.3;">${title}</h1>
               ${body}
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td align="center" style="padding-top:40px;">
-              <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;letter-spacing:0.02em;">© ${new Date().getFullYear()} S-Web Hub. All rights reserved.</p>
-              <p style="color:rgba(255,255,255,0.25);font-size:11px;margin:12px 0 0 0;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Elite Digital Solutions & AI Automation</p>
+            <td align="center" style="padding-top:32px;">
+              <p style="color:#666666;font-size:13px;margin:0;letter-spacing:0.01em;">© ${new Date().getFullYear()} S-Web Hub. All rights reserved.</p>
+              <p style="color:#444444;font-size:11px;margin:8px 0 0 0;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;">Premium Digital Solutions</p>
             </td>
           </tr>
         </table>

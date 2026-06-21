@@ -23,27 +23,31 @@ const handler: Handler = async (event: HandlerEvent) => {
     });
 
     const html = emailTemplate('Welcome Back! 👋', `
-      <p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;margin:0 0 20px 0;">
-        Hi <strong style="color:#ffffff;">${name}</strong>,
+      <p style="color:#A0A0A0;font-size:16px;line-height:1.6;margin:0 0 20px 0;">
+        Hi <strong style="color:#EDEDED;">${name}</strong>,
       </p>
-      <p style="color:rgba(255,255,255,0.7);font-size:16px;line-height:1.6;margin:0 0 32px 0;">
-        We've detected a successful secure login to your S-Web Hub account.
+      <p style="color:#A0A0A0;font-size:16px;line-height:1.6;margin:0 0 32px 0;">
+        Welcome back. We've recorded a new login from your device at <strong style="color:#EDEDED;">${loginTime}</strong>. 
       </p>
-      <div style="background-color:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin:0 0 32px 0;">
-        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0 0 6px 0;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Secure Login Verified</p>
-        <p style="color:#ffffff;font-size:15px;margin:0;font-family: monospace;">${loginTime}</p>
+      
+      <div style="background-color: #111111; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+        <p style="color:#A0A0A0; font-size:15px; line-height:1.6; margin:0;">
+          If this was you, you can safely ignore this email. If you did not authorize this login, please reply to this email immediately to secure your account.
+        </p>
       </div>
+
       <table cellpadding="0" cellspacing="0" style="margin:0 0 32px 0;">
         <tr>
-          <td style="background: linear-gradient(to bottom, #3b82f6, #1d4ed8); border: 1px solid #1e40af; border-bottom: 4px solid #1e3a8a; border-radius: 100px; padding: 14px 32px; box-shadow: 0 10px 20px rgba(59,130,246,0.3), inset 0 2px 0 rgba(255,255,255,0.3);">
-            <a href="https://28webhub.netlify.app/dashboard" style="color:#ffffff; font-size:15px; font-weight:700; text-decoration:none; display:inline-block; letter-spacing: 0.02em; text-shadow: 0 -1px 1px rgba(0,0,0,0.4);">
-              Enter Dashboard &rarr;
+          <td style="background-color: #EDEDED; border-radius: 8px; padding: 14px 28px;">
+            <a href="https://28webhub.netlify.app/dashboard" style="color:#050505; font-size:14px; font-weight:600; text-decoration:none; display:inline-block; letter-spacing: 0.02em;">
+              Go to Dashboard &rarr;
             </a>
           </td>
         </tr>
       </table>
-      <p style="color:rgba(255,255,255,0.4);font-size:13px;line-height:1.6;margin:0;border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px;">
-        If you did not authorize this login, please secure your account immediately by resetting your password or contacting support.
+      
+      <p style="color:#666666;font-size:13px;line-height:1.6;margin:0;border-top: 1px solid #1A1A1A; padding-top: 24px;">
+        For security purposes, we log all account access times. We're here to help you stay secure.
       </p>
     `);
 

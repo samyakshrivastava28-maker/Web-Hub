@@ -1,8 +1,11 @@
 import nodemailer from 'nodemailer';
+import fs from 'fs';
 
 async function testEmail() {
-  console.log('Testing SMTP connection...');
+  console.log('Sending Welcome Email Preview...');
   try {
+    const htmlContent = fs.readFileSync('public/email-preview.html', 'utf8');
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -12,13 +15,13 @@ async function testEmail() {
     });
 
     const info = await transporter.sendMail({
-      from: '"S-Web Hub Test" <webhub2811@gmail.com>',
+      from: '"S-Web Hub" <webhub2811@gmail.com>',
       to: 'webhub2811@gmail.com',
-      subject: 'SMTP Test',
-      text: 'If you get this, SMTP is working perfectly from the local machine!',
+      subject: 'LATEST: Clean & Professional Email Theme 🚀',
+      html: htmlContent,
     });
 
-    console.log('Success!', info.messageId);
+    console.log('Success! Sent to webhub2811@gmail.com. Message ID:', info.messageId);
   } catch (error) {
     console.error('SMTP Error:', error);
   }
