@@ -1,5 +1,5 @@
 import type { Handler, HandlerEvent } from '@netlify/functions';
-import { sendEmail, emailTemplate, optionsResponse, errorResponse, successResponse, RESEND_FROM, ADMIN_EMAIL } from './utils/email-helpers';
+import { sendEmail, emailTemplate, optionsResponse, errorResponse, successResponse, ADMIN_EMAIL } from './utils/email-helpers';
 
 const handler: Handler = async (event: HandlerEvent) => {
   if (event.httpMethod === 'OPTIONS') return optionsResponse();
@@ -82,7 +82,6 @@ const handler: Handler = async (event: HandlerEvent) => {
       to: ADMIN_EMAIL,
       subject: `📅 Consultation Request: ${name}${service ? ` — ${service}` : ''}`,
       html,
-      from: RESEND_FROM,
     });
 
     return successResponse({ message: 'Consultation request sent' });

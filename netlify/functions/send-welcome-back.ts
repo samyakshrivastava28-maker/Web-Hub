@@ -1,5 +1,5 @@
 import type { Handler, HandlerEvent } from '@netlify/functions';
-import { sendEmail, emailTemplate, optionsResponse, errorResponse, successResponse, RESEND_FROM } from './utils/email-helpers';
+import { sendEmail, emailTemplate, optionsResponse, errorResponse, successResponse } from './utils/email-helpers';
 
 const handler: Handler = async (event: HandlerEvent) => {
   if (event.httpMethod === 'OPTIONS') return optionsResponse();
@@ -51,7 +51,6 @@ const handler: Handler = async (event: HandlerEvent) => {
       to: email,
       subject: 'Welcome Back to S-Web Hub 👋',
       html,
-      from: RESEND_FROM,
     });
 
     return successResponse({ message: 'Welcome back email sent' });

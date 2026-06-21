@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 // Shared types and helpers for Netlify email functions
 export interface EmailPayload {
   to: string;
@@ -6,7 +8,6 @@ export interface EmailPayload {
   from?: string;
 }
 
-export const RESEND_FROM = 'S-Web Hub <onboarding@resend.dev>';
 export const ADMIN_EMAIL = 'webhub2811@gmail.com';
 
 export function corsHeaders() {
@@ -42,31 +43,30 @@ export function successResponse(data: Record<string, unknown> = {}) {
 }
 
 export async function sendEmail(payload: EmailPayload) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('RESEND_API_KEY environment variable is not set');
+  const emailUser = process.env.VITE_GMAIL_USER || process.env.GMAIL_USER;
+  const emailPass = process.env.VITE_GMAIL_PASS || process.env.GMAIL_PASS;
+
+  if (!emailUser || !emailPass) {
+    throw new Error('GMAIL_USER or GMAIL_PASS environment variables are not set');
   }
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: emailUser,
+      pass: emailPass,
     },
-    body: JSON.stringify({
-      from: payload.from || RESEND_FROM,
-      to: [payload.to],
-      subject: payload.subject,
-      html: payload.html,
-    }),
   });
 
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(`Resend API error: ${response.status} - ${errorData}`);
-  }
+  const mailOptions = {
+    from: `"S-Web Hub" <${emailUser}>`,
+    to: payload.to,
+    subject: payload.subject,
+    html: payload.html,
+  };
 
-  return response.json();
+  const info = await transporter.sendMail(mailOptions);
+  return info;
 }
 
 // Premium email template wrapper
