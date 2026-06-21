@@ -23,10 +23,10 @@ const handler: Handler = async (event: HandlerEvent) => {
     });
 
     const html = emailTemplate('📩 New Contact Form Submission', `
-      <p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;margin:0 0 24px 0;">
+      <p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;margin:0 0 20px 0;">
         A new message has been submitted through the contact form on S-Web Hub.
       </p>
-      <div style="background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;margin:24px 0;">
+      <div style="background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.15); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
         <table cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td style="padding:8px 0;color:rgba(255,255,255,0.4);font-size:13px;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;width:120px;">Name</td>
@@ -52,8 +52,8 @@ const handler: Handler = async (event: HandlerEvent) => {
       </div>
       <div style="margin-top:24px;">
         <p style="color:rgba(255,255,255,0.4);font-size:13px;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin:0 0 12px 0;">Message</p>
-        <div style="background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;">
-          <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.7;margin:0;white-space:pre-wrap;">${message}</p>
+        <div style="background-color:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:20px;">
+          <p style="color:rgba(255,255,255,0.8);font-size:15px;line-height:1.7;margin:0;white-space:pre-wrap;">${message}</p>
         </div>
       </div>
     `);

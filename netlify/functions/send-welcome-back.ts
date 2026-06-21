@@ -23,27 +23,27 @@ const handler: Handler = async (event: HandlerEvent) => {
     });
 
     const html = emailTemplate('Welcome Back! 👋', `
-      <p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;margin:0 0 24px 0;">
+      <p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;margin:0 0 20px 0;">
         Hi <strong style="color:#ffffff;">${name}</strong>,
       </p>
-      <p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;margin:0 0 24px 0;">
-        You've successfully signed in to your S-Web Hub account.
+      <p style="color:rgba(255,255,255,0.7);font-size:16px;line-height:1.6;margin:0 0 32px 0;">
+        We've detected a successful secure login to your S-Web Hub account.
       </p>
-      <div style="background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin:24px 0;">
-        <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0 0 4px 0;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Login Time</p>
-        <p style="color:rgba(255,255,255,0.7);font-size:15px;margin:0;">${loginTime}</p>
+      <div style="background-color:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin:0 0 32px 0;">
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0 0 6px 0;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Secure Login Verified</p>
+        <p style="color:#ffffff;font-size:15px;margin:0;font-family: monospace;">${loginTime}</p>
       </div>
-      <table cellpadding="0" cellspacing="0" style="margin:32px 0;">
+      <table cellpadding="0" cellspacing="0" style="margin:0 0 32px 0;">
         <tr>
-          <td style="background-color:#ffffff;border-radius:12px;padding:14px 32px;">
-            <a href="https://s-web-hub.netlify.app/dashboard" style="color:#000000;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;">
-              Open Dashboard →
+          <td style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 100px; padding: 14px 32px; box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
+            <a href="https://s-web-hub.netlify.app/dashboard" style="color:#ffffff; font-size:15px; font-weight:600; text-decoration:none; display:inline-block; letter-spacing: 0.02em;">
+              Enter Dashboard &rarr;
             </a>
           </td>
         </tr>
       </table>
-      <p style="color:rgba(255,255,255,0.3);font-size:13px;line-height:1.6;margin:0;">
-        If this wasn't you, please secure your account immediately by resetting your password.
+      <p style="color:rgba(255,255,255,0.4);font-size:13px;line-height:1.6;margin:0;border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px;">
+        If you did not authorize this login, please secure your account immediately by resetting your password or contacting support.
       </p>
     `);
 
