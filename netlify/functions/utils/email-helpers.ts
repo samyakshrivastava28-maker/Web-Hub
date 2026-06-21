@@ -78,21 +78,9 @@ export function emailTemplate(title: string, body: string): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <style>
-    @keyframes aurora {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .animated-bg {
-      background: linear-gradient(-45deg, #000000, #0a0f1c, #000000, #0f0a1c);
-      background-size: 400% 400%;
-      animation: aurora 15s ease infinite;
-    }
-  </style>
 </head>
-<body class="animated-bg" style="margin:0;padding:0;background-color:#000000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#ffffff;">
-  <table width="100%" cellpadding="0" cellspacing="0" class="animated-bg" style="background-color:#000000;padding:40px 20px;">
+<body style="margin:0;padding:0;background-color:#000000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#ffffff;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#000000;padding:40px 20px;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
