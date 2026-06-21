@@ -14,13 +14,6 @@ export default function IntroPreloader({ onIntroComplete }: IntroPreloaderProps)
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const hasSeenIntro = localStorage.getItem('swebhub_intro_seen');
-    if (hasSeenIntro === 'true') {
-      setShowIntro(false);
-      onIntroComplete?.();
-      return;
-    }
-
     setIsMobile(window.innerWidth < 768);
 
     if (videoRef.current) {
@@ -36,7 +29,6 @@ export default function IntroPreloader({ onIntroComplete }: IntroPreloaderProps)
   }, []);
 
   const handleVideoEnd = useCallback(() => {
-    localStorage.setItem('swebhub_intro_seen', 'true');
     setShowIntro(false);
     onIntroComplete?.();
   }, [onIntroComplete]);
