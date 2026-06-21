@@ -5,10 +5,11 @@ import ReactMarkdown from 'react-markdown';
 import Ferrofluid from './Ferrofluid';
 
 const MODELS = [
-  "deepseek-ai/deepseek-v4-flash",
-  "google/gemma-4-31b-it",
-  "openai/gpt-oss-120b"
+  "deepseek-ai/deepseek-r1",
+  "meta/llama3-70b-instruct"
 ];
+
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
 
 const FERROFLUID_COLORS = ["#4F46E5", "#06B6D4", "#E0F2FE"];
 
@@ -81,7 +82,7 @@ export default function AIChatbot() {
     }
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -150,8 +151,8 @@ export default function AIChatbot() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="fixed z-[9990] bg-[#111111] border border-white/10 shadow-2xl overflow-hidden
-              inset-4 top-24 rounded-2xl md:inset-auto
-              md:bottom-20 md:right-8 md:w-[400px] md:h-[550px] md:rounded-2xl"
+              bottom-20 right-4 left-4 h-[70svh] max-h-[500px] rounded-2xl md:inset-auto
+              md:bottom-24 md:right-8 md:w-[350px] md:h-[480px] md:rounded-2xl flex flex-col"
             style={{
               paddingTop: 'env(safe-area-inset-top, 0px)',
               paddingBottom: 'env(safe-area-inset-bottom, 0px)',
