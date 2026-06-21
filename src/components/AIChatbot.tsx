@@ -82,19 +82,40 @@ export default function AIChatbot() {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: MODELS[modelIndex],
-          messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs]
-        })
-      });
+      let response;
+      
+      if (import.meta.env.DEV && import.meta.env.VITE_NVIDIA_API_KEY) {
+        // Local dev bypass to avoid Netlify function errors when running `npm run dev`
+        response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_NVIDIA_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: MODELS[modelIndex],
+            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs],
+            temperature: 0.7,
+            max_tokens: 1024,
+          })
+        });
+      } else {
+        // Production secure call
+        response = await fetch(`${API_BASE}/chat`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: MODELS[modelIndex],
+            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs]
+          })
+        });
+      }
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
@@ -258,16 +279,18 @@ export default function AIChatbot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Button — always visible, proper mobile positioning */}
-      {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed right-4 md:right-8 bottom-5 md:bottom-8 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-300 z-[9990] group"
-          style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
-        >
+      {/* Floating Button — always visible, toggle between chat and close */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed right-4 md:right-8 bottom-5 md:bottom-8 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-300 z-[9999] group"
+        style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
+        {isOpen ? (
+          <X className="w-6 h-6 text-black group-hover:scale-110 transition-transform duration-300" />
+        ) : (
           <MessageSquare className="w-6 h-6 text-black group-hover:scale-110 transition-transform duration-300" />
-        </button>
-      )}
+        )}
+      </button>
     </>
   );
 }
