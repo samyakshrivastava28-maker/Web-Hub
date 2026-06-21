@@ -35,8 +35,8 @@ const handler: Handler = async (event: HandlerEvent) => {
       </div>
       <table cellpadding="0" cellspacing="0" style="margin:0 0 32px 0;">
         <tr>
-          <td style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 100px; padding: 14px 32px; box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
-            <a href="https://s-web-hub.netlify.app/dashboard" style="color:#ffffff; font-size:15px; font-weight:600; text-decoration:none; display:inline-block; letter-spacing: 0.02em;">
+          <td style="background: linear-gradient(to bottom, #3b82f6, #1d4ed8); border: 1px solid #1e40af; border-bottom: 4px solid #1e3a8a; border-radius: 100px; padding: 14px 32px; box-shadow: 0 10px 20px rgba(59,130,246,0.3), inset 0 2px 0 rgba(255,255,255,0.3);">
+            <a href="https://28webhub.netlify.app/dashboard" style="color:#ffffff; font-size:15px; font-weight:700; text-decoration:none; display:inline-block; letter-spacing: 0.02em; text-shadow: 0 -1px 1px rgba(0,0,0,0.4);">
               Enter Dashboard &rarr;
             </a>
           </td>

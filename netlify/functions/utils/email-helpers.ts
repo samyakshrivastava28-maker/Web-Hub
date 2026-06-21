@@ -92,8 +92,8 @@ export function emailTemplate(title: string, body: string): string {
           </tr>
           <!-- Card -->
           <tr>
-            <td style="background: linear-gradient(to bottom, #0d0d0f, #050505);border:1px solid rgba(255,255,255,0.08);border-top:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:48px 40px;box-shadow:0 20px 40px rgba(0,0,0,0.5);">
-              <h1 style="color:#ffffff;font-size:28px;font-weight:700;margin:0 0 24px 0;letter-spacing:-0.03em;line-height:1.2;">${title}</h1>
+            <td style="background: linear-gradient(145deg, #11131a, #0a0b0f); border: 1px solid rgba(255,255,255,0.05); border-top: 1px solid rgba(255,255,255,0.15); border-left: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 48px 40px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), inset 0 2px 2px rgba(255,255,255,0.1), inset 0 -4px 10px rgba(0,0,0,0.5);">
+              <h1 style="color:#ffffff;font-size:28px;font-weight:700;margin:0 0 24px 0;letter-spacing:-0.03em;line-height:1.2;text-shadow: 0 2px 4px rgba(0,0,0,0.5);">${title}</h1>
               ${body}
             </td>
           </tr>
