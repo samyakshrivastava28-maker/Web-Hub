@@ -5,8 +5,10 @@ import ReactMarkdown from 'react-markdown';
 import Ferrofluid from './Ferrofluid';
 
 const MODELS = [
-  "deepseek-ai/deepseek-r1",
-  "meta/llama3-70b-instruct"
+  "deepseek-ai/deepseek-v4-flash",
+  "google/gemma-4-31b-it",
+  "qwen/qwen3.6-flash",
+  "meta-llama/llama-3.3-70b-instruct"
 ];
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
@@ -21,11 +23,19 @@ Services:
 4. Business Systems
 
 Rules:
-- Be highly professional, concise, and persuasive.
+- Be highly professional, concise, and 100% accurate.
+- Answer as quickly and directly as possible without unnecessary fluff.
 - Use Markdown to format your answers (bolding, lists, etc).
 - Always position S-Web Hub as the ultimate solution for scaling their business.
 - If they ask about prices, politely let them know we provide custom quotes based on scope.
-- Analyze their requests intelligently and offer solutions.`;
+- Analyze their requests intelligently and offer solutions.
+
+Official Agency Policies (Enforce these if asked):
+- Payment: Minimum 30% advance payment is required before work begins.
+- Domains: Domain purchase is NOT included in website pricing. Clients must purchase their own.
+- Hosting/Extras: Hosting, premium plugins, APIs, and subscriptions are not included unless explicitly agreed.
+- Revisions: Major scope changes after initial approval will incur additional charges.
+- Liability: Clients are fully responsible for their own content and legal compliance. S-Web Hub is not liable for third-party actions or unlawful content.`;
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -84,23 +94,77 @@ export default function AIChatbot() {
     try {
       let response;
       
-      if (import.meta.env.DEV && import.meta.env.VITE_NVIDIA_API_KEY) {
-        // Local dev bypass to avoid Netlify function errors when running `npm run dev`
-        response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_NVIDIA_API_KEY}`
-          },
-          body: JSON.stringify({
-            model: MODELS[modelIndex],
-            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs],
-            temperature: 0.7,
-            max_tokens: 1024,
-          })
-        });
+      if (import.meta.env.DEV) {
+        // LOCAL DEV BYPASS: `npm run dev` doesn't run Netlify functions, so we bypass them locally.
+        // This code is completely stripped out of the production build by Vite, keeping keys secure.
+        
+        const payload: any = {
+          model: MODELS[modelIndex],
+          messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs],
+          temperature: 0.2,
+          max_tokens: 1024,
+        };
+
+        const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+        const nvidiaKey = import.meta.env.VITE_NVIDIA_API_KEY;
+        
+        let localError = '';
+
+        // 1. Try NVIDIA First
+        if (nvidiaKey) {
+          try {
+            if (MODELS[modelIndex].includes('deepseek')) {
+              payload.chat_template_kwargs = { thinking: false };
+            }
+            response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${nvidiaKey}`
+              },
+              body: JSON.stringify(payload)
+            });
+            if (!response.ok) {
+              localError += `[Nvidia: ${response.status}] `;
+              response = undefined;
+            }
+          } catch (e: any) {
+            localError += `[Nvidia Fetch: ${e.message}] `;
+          }
+        }
+
+        // 2. Fallback to OpenRouter
+        if (!response && openRouterKey) {
+          try {
+            // Remove NVIDIA specific kwargs for OpenRouter just in case
+            const fallbackPayload = { ...payload };
+            delete fallbackPayload.chat_template_kwargs;
+
+            response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${openRouterKey}`,
+                'HTTP-Referer': window.location.origin,
+                'X-Title': 'S-Web Hub Chatbot'
+              },
+              body: JSON.stringify(fallbackPayload)
+            });
+            if (!response.ok) {
+              localError += `[OpenRouter: ${response.status}] `;
+              response = undefined;
+            }
+          } catch (e: any) {
+            localError += `[OpenRouter Fetch: ${e.message}] `;
+          }
+        }
+
+        if (!response) {
+          throw new Error(`Local Dev API Error: ${localError || 'No API Keys Found in .env'}`);
+        }
+
       } else {
-        // Production secure call
+        // PRODUCTION: Secure call via Netlify Function
         response = await fetch(`${API_BASE}/chat`, {
           method: 'POST',
           headers: {
@@ -111,11 +175,11 @@ export default function AIChatbot() {
             messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...msgs]
           })
         });
-      }
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Server Error ${response.status}: ${errorText}`);
+        }
       }
 
       const data = await response.json();
@@ -139,8 +203,8 @@ export default function AIChatbot() {
       const cleanReply = reply.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
       
       setMessages(prev => [...prev, { role: 'assistant', content: cleanReply }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { role: 'assistant', content: "I'm sorry, our AI systems are currently unreachable. Please contact us directly!" }]);
+    } catch (error: any) {
+      setMessages(prev => [...prev, { role: 'assistant', content: `DEBUG ERROR: ${error.message}` }]);
     } finally {
       setIsLoading(false);
     }
