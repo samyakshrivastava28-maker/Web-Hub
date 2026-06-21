@@ -1,20 +1,45 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+  <img src="https://ik.imagekit.io/hx85ktgzm/S-Web-Hub-logo%20(1).webp" alt="S-Web Hub Logo" width="120" />
+  <h1>S-Web Hub</h1>
+  <p>Engineering cinematic digital experiences for the modern web.</p>
 </div>
 
-# Run and deploy your AI Studio app
+## Overview
 
-This contains everything you need to run your app locally.
+S-Web Hub is a premium web development agency portfolio built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. 
 
-View your app in AI Studio: https://ai.studio/apps/a9f36b9e-7500-4dfe-a4ee-44084bd60bc2
+We specialize in high-end interactive layouts, glassmorphism, WebGL canvas experiences, and cinematic video storytelling to create web experiences that wow users at first glance.
+
+## Features
+
+- **Cinematic Hero Sections**: Scroll-linked animations and fading video systems.
+- **Bento Grid Architecture**: Beautiful, responsive layout systems for service offerings and portfolio pieces.
+- **Liquid Glass Interfaces**: Custom CSS radial gradient backdrop-filter utility systems for highly premium UI cards.
+- **Advanced Mockups Showcase**: 
+  - *Lithos Geology*: WebGL-powered cursor reveal.
+  - *Voyage Aerospace*: Fading video and Framer Motion interactions.
+  - *Securify SaaS*: High-contrast typography and absolute layout scaling.
+  - *LinkFlow Platform*: Boomerang seamless canvas video background.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open `http://localhost:5173` to view the app.
+
+## Tech Stack
+
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion (`motion/react`)
+- **Icons**: Lucide React

@@ -65,6 +65,41 @@ async function startServer() {
     }
   });
 
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const apiKey = process.env.VITE_NVIDIA_API_KEY;
+      if (!apiKey) {
+        throw new Error("VITE_NVIDIA_API_KEY environment variable is required");
+      }
+      
+      const { model, messages } = req.body;
+      
+      const response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature: 0.7,
+          max_tokens: 1024
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`NVIDIA API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error: any) {
+      console.error("Chat API error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
