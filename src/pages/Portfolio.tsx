@@ -135,10 +135,10 @@ export default function Portfolio() {
                     <iframe 
                       src="https://primeelitestore02.netlify.app" 
                       loading="lazy"
-                      className="w-full h-full border-none pointer-events-none group-hover:pointer-events-auto transition-all"
+                      className="w-full h-full border-none pointer-events-auto lg:pointer-events-none group-hover:pointer-events-auto transition-all"
                       title="Prime Elite Store"
                     />
-                    <div className="absolute inset-0 bg-transparent group-hover:pointer-events-none transition-all" />
+                    <div className="absolute inset-0 bg-transparent hidden lg:block group-hover:pointer-events-none transition-all" />
                   </div>
                 </BrowserFrame>
               </div>
@@ -210,10 +210,10 @@ export default function Portfolio() {
                     <iframe 
                       src="https://s-callhub.netlify.app" 
                       loading="lazy"
-                      className="w-full h-full border-none pointer-events-none group-hover:pointer-events-auto transition-all bg-black"
+                      className="w-full h-full border-none pointer-events-auto lg:pointer-events-none group-hover:pointer-events-auto transition-all bg-black"
                       title="S-CallHub"
                     />
-                    <div className="absolute inset-0 bg-transparent group-hover:pointer-events-none transition-all" />
+                    <div className="absolute inset-0 bg-transparent hidden lg:block group-hover:pointer-events-none transition-all" />
                   </div>
                 </BrowserFrame>
               </div>

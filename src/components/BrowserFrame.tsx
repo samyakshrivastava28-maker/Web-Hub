@@ -33,7 +33,7 @@ export default function BrowserFrame({ children, url = "https://flowai.swebhub.c
   return (
     <div 
       ref={containerRef} 
-      className="w-full aspect-[16/10] relative flex items-center justify-center group"
+      className="w-full aspect-[9/16] sm:aspect-[4/3] md:aspect-[16/10] relative flex items-center justify-center group max-h-[80vh] md:max-h-none mx-auto max-w-[400px] sm:max-w-none"
       style={{ perspective: isMobile ? 'none' : '2000px' }}
     >
       {/* Ambient glow — desktop only */}
