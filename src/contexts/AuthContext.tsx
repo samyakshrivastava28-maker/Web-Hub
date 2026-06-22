@@ -118,8 +118,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const name = res.user.displayName || email;
     
-    // Background task - do not await
-    sendWelcomeBackEmail(name, email).catch(console.error);
+    // Await it so browser doesn't cancel request on redirect
+    await sendWelcomeBackEmail(name, email).catch(console.error);
     
     let profileData: UserProfile | null = null;
     try {
@@ -171,9 +171,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUserProfile(profileData);
     setCurrentUser(res.user);
     
-    // Background emails
-    sendWelcomeEmail(name, email).catch(console.error);
-    sendAdminNotification(name, email, phoneNumber, 'email').catch(console.error);
+    // Background emails - await them to ensure they send before page unloads
+    await Promise.all([
+      sendWelcomeEmail(name, email).catch(console.error),
+      sendAdminNotification(name, email, phoneNumber, 'email').catch(console.error)
+    ]);
     
     console.log("[AUTH] Signup completed for:", email);
     return { user: res.user, profile: profileData };
@@ -230,8 +232,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Existing user login
       const name = user.displayName || user.email || 'User';
       
-      // Background task - do not await
-      sendWelcomeBackEmail(name, user.email || '').catch(console.error);
+      // Await it so browser doesn't cancel request on redirect
+      await sendWelcomeBackEmail(name, user.email || '').catch(console.error);
       
       if (existingProfile) {
         setUserProfile(existingProfile);
@@ -255,9 +257,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Update local state ONLY after backend save succeeds
     setUserProfile(updated);
     
-    // Non-blocking background emails
-    sendWelcomeEmail(updated.name, updated.email).catch(console.error);
-    sendAdminNotification(updated.name, updated.email, phoneNumber, updated.provider).catch(console.error);
+    // Background emails - await them to ensure they send before page unloads
+    await Promise.all([
+      sendWelcomeEmail(updated.name, updated.email).catch(console.error),
+      sendAdminNotification(updated.name, updated.email, phoneNumber, updated.provider).catch(console.error)
+    ]);
   };
 
   const updateUserName = async (name: string) => {

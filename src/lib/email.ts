@@ -24,18 +24,15 @@ async function callEmailFunction(endpoint: string, data: Record<string, string>)
 }
 
 export const sendWelcomeEmail = async (name: string, email: string): Promise<void> => {
-  // Fire-and-forget — don't await to avoid blocking onboarding
-  callEmailFunction('send-welcome', { name, email });
+  await callEmailFunction('send-welcome', { name, email });
 };
 
 export const sendAdminNotification = async (name: string, email: string, phone: string, method: string): Promise<void> => {
-  // Fire-and-forget — don't await to avoid blocking onboarding
-  callEmailFunction('send-admin-notification', { name, email, phone, method });
+  await callEmailFunction('send-admin-notification', { name, email, phone, method });
 };
 
 export const sendWelcomeBackEmail = async (name: string, email: string): Promise<void> => {
-  // Fire-and-forget — don't await to avoid blocking login
-  callEmailFunction('send-welcome-back', { name, email });
+  await callEmailFunction('send-welcome-back', { name, email });
 };
 
 export const sendContactFormEmail = async (name: string, email: string, phone: string, message: string): Promise<void> => {
